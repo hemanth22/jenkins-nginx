@@ -56,6 +56,6 @@ jobs:
         image: bitroid/jenkinsnginx
         tags: v1, latest
         registry: docker.io
-        dockerfile: ./docs/Dockerfile
+        dockerfile: ./Dockerfile
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
