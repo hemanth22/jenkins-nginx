@@ -15,7 +15,7 @@ jobs:
       uses: VaultVulp/gp-docker-action@1.1.7
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }} # Provide GITHUB_TOKEN to login into the GitHub Packages
-        image-name: lessonslearnt # Provide only Docker image name, tag will be automatically set to latest
+        image-name: jenkinsnginx # Provide only Docker image name, tag will be automatically set to latest
         dockerfile: ./Dockerfile
     
   snyk:
@@ -23,7 +23,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build a Docker image
-      run: docker build -t jenkinsnginx:v1 -f ./Dockerfile .
+      run: docker build -t jenkinsnginx:v2 -f ./Dockerfile .
     - name: Build a Docker image
       run: docker ps -a; docker images
 
@@ -37,7 +37,7 @@ jobs:
       name: Build & push Docker image
       with:
         image: bitroid/jenkinsnginx
-        tags: v1, latest
+        tags: v2, latest
         registry: docker.io
         dockerfile: ./Dockerfile
         username: ${{ secrets.DOCKER_USERNAME }}
