@@ -23,7 +23,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build a Docker image
-      run: docker build -t jenkinsnginx:v2 -f ./Dockerfile .
+      run: docker build -t jenkinsnginx:v3 -f ./Dockerfile .
     - name: Build a Docker image
       run: docker ps -a; docker images
 
@@ -37,7 +37,7 @@ jobs:
       name: Build & push Docker image
       with:
         image: bitroid/jenkinsnginx
-        tags: v2, latest
+        tags: v3, latest
         registry: docker.io
         dockerfile: ./Dockerfile
         username: ${{ secrets.DOCKER_USERNAME }}
