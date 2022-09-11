@@ -28,11 +28,19 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: echo Hello, world!
+        
+      # Runs a set of commands using the runners shell
+      - name: Clean up before deployment
+        run: |
+          kubectl delete -f jenkins.configmap.yaml
+          kubectl delete -f jenkins-patch.yaml
+          kubectl delete -f jenkins-service.yaml
+          
 
-      - name: create jenkins configmap for nginx
+      - name: deploying jenkins config map
         run: kubectl apply -f jenkins.configmap.yaml
 
-      - name: create jenkins 
+      - name: deploying jenkins
         run: kubectl apply -f jenkins-patch.yaml
         
       - name: wait for jenkins to up 
@@ -41,8 +49,11 @@ jobs:
       - name: jenkins to verify nginx
         run: kubectl exec -it deployment.apps/jenkins -- nginx -t
         
-      - name: create jenkins configmap for nginx
+      - name: deploying jenkins network service
         run: kubectl apply -f jenkins-service.yaml
+        
+      - name: verify deployments
+        run: kubectl get all
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
