@@ -37,17 +37,17 @@ jobs:
           echo Hello, world!
           
 
-      - name: deploying jenkins config map
-        run: echo Hello, world!
+      - name: podman to pull nginx
+        run: podman pull docker.io/library/nginx
 
-      - name: deploying jenkins
-        run: echo Hello, world!
+      - name: podman create nginxapp pod
+        run: podman pod create --name nginxapp -p 8081:80 -p 443:443 --network bridge
         
-      - name: wait for jenkins to up 
-        run: echo Hello, world!
+      - name: podman to deploy a container inside the pod
+        run: podman run --pod nginxapp --name nginx-server -d nginx:latest
         
-      - name: jenkins to verify nginx
-        run: echo Hello, world!
+      - name: podman command to show podman services
+        run: podman ps
         
       - name: deploying jenkins network service
         run: echo Hello, world!
