@@ -32,25 +32,27 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Clean up before deployment
         run: |
-          echo Hello, world!
-          echo Hello, world!
-          echo Hello, world!
+          echo "[TASK] Cleanup activity"
+          podman pod stop nginxapp
+          podman pod rm nginxapp
           
 
       - name: podman to pull nginx
-        run: podman pull docker.io/library/nginx
+        run: podman pull docker.io/library/nginx:latest
 
       - name: podman create nginxapp pod
-        run: podman pod create --name nginxapp -p 8081:80 -p 443:443 --network bridge
+        run: podman pod create --name nginxapp -p 8081:80
         
       - name: podman to deploy a container inside the pod
         run: podman run --pod nginxapp --name nginx-server -d nginx:latest
         
       - name: podman command to show podman services
-        run: podman ps
+        run: |
+          podman pod ps
+          podman ps -a
         
-      - name: deploying jenkins network service
-        run: echo Hello, world!
+      - name: verify nginx server
+        run: curl -I localhost:8081
         
       - name: verify deployments
         run: kubectl get all
